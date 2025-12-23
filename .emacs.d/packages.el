@@ -62,7 +62,7 @@
 (envrc-global-mode)
 
 ;;; vterm (terminal emulator)
-(require 'vterm)
+(rc/require 'vterm)
 (defun rc/find-shell ()
   "Find a suitable shell, checking common locations."
   (or (getenv "SHELL")
