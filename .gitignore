@@ -1,0 +1,28 @@
+# Emacs packages and caches (reinstallable)
+.emacs.d/elpa/
+.emacs.d/eln-cache/
+.emacs.d/auto-save-list/
+.emacs.d/eshell/
+
+# Emacs session state
+.emacs.d/ido.last
+.emacs.d/recentf
+.emacs.d/smex-items
+.emacs.d/tramp
+.emacs.d/.mc-lists.el
+*.elc
+
+# Build caches
+.cache/
+.cargo/
+.npm/
+target/
+
+# Local state
+.local/
+.nix-profile
+
+# System
+.bash_history
+.pki/
+.config/
