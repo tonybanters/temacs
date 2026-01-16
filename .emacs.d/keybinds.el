@@ -26,7 +26,9 @@
   (evil-define-key 'normal dired-mode-map
     "." 'dired-create-empty-file
     "h" 'dired-up-directory
-    "l" 'dired-find-file))
+    "l" 'dired-find-file
+    "n" 'evil-search-next
+    "N" 'evil-search-previous))
 
 ;;; LSP keybindings
 (with-eval-after-load 'eglot
@@ -38,14 +40,17 @@
 ;;; Leader keybindings (SPC)
 (evil-leader/set-key
   ;; files
-  "ff" 'my/consult-fd
+  "ff" 'my/telescope-find-files
+  "fF" 'my/fzf-find-file
   "fg" 'my/consult-ripgrep
   "fs" 'my/consult-ripgrep-symbol
   "fo" 'consult-recent-file
   "fl" 'consult-line
   "fi" 'my/find-emacs-config
+  "fp" 'my/switch-project
   ;; buffers
   "bb" 'consult-buffer
+  "fb" 'consult-buffer
   "bp" 'previous-buffer
   "bn" 'next-buffer
   "bd" 'kill-current-buffer
@@ -62,6 +67,8 @@
   ;; magit
   "ms" 'magit-status
   "ml" 'magit-log
+  ;; ssh/servers
+  "st" 'my/connect-tonydev
   ;; terminal
   "to" 'my/vterm-here
   ;; window

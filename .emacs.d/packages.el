@@ -1,6 +1,7 @@
 ;;; packages.el --- Package configuration -*- lexical-binding: t -*-
 
 ;;; evil mode (vim bindings)
+(setq evil-want-keybinding nil)  ; required before loading evil-collection
 (rc/require 'evil 'evil-leader 'evil-collection 'evil-commentary)
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
@@ -9,7 +10,7 @@
 (evil-commentary-mode 1)
 
 ;;; Vertico + Consult + Orderless (telescope-like fuzzy finding)
-(rc/require 'vertico 'consult 'orderless 'marginalia 'vertico-posframe)
+(rc/require 'vertico 'consult 'orderless 'marginalia 'vertico-posframe 'fzf 'affe)
 (vertico-mode 1)
 (vertico-posframe-mode 1)
 (marginalia-mode 1)
@@ -23,6 +24,12 @@
 (setq completion-styles '(orderless basic)
       completion-category-defaults nil
       completion-category-overrides '((file (styles . (partial-completion)))))
+
+;; Flex matching (fzf-style: characters in sequence)
+(setq orderless-matching-styles '(orderless-literal orderless-flex))
+
+;; Affe (async fuzzy finder using orderless)
+(setq affe-find-command "fd --color=never -t f")
 
 (setq consult-fd-args '("fd" "--color=never" "--type" "f" "--hidden" "--follow" "--exclude" ".git"))
 
@@ -44,7 +51,7 @@
 (global-company-mode)
 
 ;;; Language modes
-(rc/require 'zig-mode 'rust-mode)
+(rc/require 'zig-mode 'rust-mode 'php-mode)
 
 ;;; LSP (eglot is built-in to Emacs 29+)
 (require 'eglot)
@@ -55,6 +62,12 @@
 (add-hook 'rust-mode-hook 'eglot-ensure)
 (add-hook 'c-mode-hook 'eglot-ensure)
 (add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'php-mode-hook 'eglot-ensure)
+
+;; PHP intelephense config (no auto-format)
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(php-mode . ("intelephense" "--stdio"))))
 
 
 ;;; Direnv integration (loads devshell environment)

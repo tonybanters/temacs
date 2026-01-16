@@ -64,6 +64,32 @@
   (let ((default-directory my/base-dir))
     (consult-fd)))
 
+(defun my/fzf-find-file ()
+  "Find files from base dir using fzf."
+  (interactive)
+  (let ((default-directory my/base-dir))
+    (fzf-find-file)))
+
+(defun my/affe-find ()
+  "Find files from base dir using affe (async fuzzy)."
+  (interactive)
+  (affe-find my/base-dir))
+
+;; Telescope
+(load (expand-file-name "telescope.el" user-emacs-directory))
+
+(defun my/telescope-find-files ()
+  "Find files from base dir using telescope."
+  (interactive)
+  (telescope-find-files my/base-dir))
+
+(defun my/connect-tonydev ()
+  "Connect to tonydev server and set base dir."
+  (interactive)
+  (setq my/base-dir "/ssh:tonydev:/www/sites/tony.dev-leasecalcs.com/")
+  (dired my/base-dir)
+  (message "Connected to tonydev"))
+
 (defun my/consult-ripgrep ()
   "Ripgrep from base dir."
   (interactive)
@@ -79,6 +105,20 @@
   (interactive)
   (let ((default-directory "/home/tony/temacs/.emacs.d/"))
     (consult-fd)))
+
+(defun my/switch-project ()
+  "Pick a project from ~/repos, set base-dir, open dired."
+  (interactive)
+  (let* ((repos-dir "~/repos/")
+         (dirs (seq-filter
+                (lambda (f) (file-directory-p (expand-file-name f repos-dir)))
+                (directory-files repos-dir nil "^[^.]")))
+         (chosen (completing-read "Project: " dirs nil t)))
+    (when chosen
+      (let ((project-dir (expand-file-name chosen repos-dir)))
+        (setq my/base-dir project-dir)
+        (dired project-dir)
+        (message "Base dir: %s" project-dir)))))
 
 (defun my/vterm-here ()
   "Open vterm in current window."
