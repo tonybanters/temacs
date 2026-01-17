@@ -182,7 +182,9 @@
 (setq vterm-kill-buffer-on-exit t)
 
 ;;; Theme
-(rc/require-theme 'gruber-darker)
+;; (rc/require-theme 'gruber-darker)
+(rc/require 'doom-themes)
+(load-theme 'doom-palenight t)
 
 ;;; Clean up modeline (hide minor modes)
 (setq eldoc-minor-mode-string nil)
