@@ -85,13 +85,6 @@
   (interactive)
   (telescope-find-files my/base-dir))
 
-(defun my/connect-tonydev ()
-  "Connect to tonydev server and set base dir."
-  (interactive)
-  (setq my/base-dir "/ssh:tonydev:/www/sites/tony.dev-leasecalcs.com/")
-  (dired my/base-dir)
-  (message "Connected to tonydev"))
-
 (defun my/consult-ripgrep ()
   "Ripgrep from base dir."
   (interactive)
@@ -105,7 +98,7 @@
 (defun my/find-emacs-config ()
   "Find files in emacs config dir."
   (interactive)
-  (let ((default-directory "/home/tony/temacs/.emacs.d/"))
+  (let ((default-directory "/home/tony/.emacs.d/"))
     (consult-fd)))
 
 (defun my/switch-project ()
