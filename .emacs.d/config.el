@@ -1,4 +1,6 @@
-; Appearance
+;;; config.el --- Configuration -*- lexical-binding: t -*-
+
+;; Appearance
 (defun rc/get-default-font ()
   (cond
    ((eq system-type 'windows-nt) "Consolas-13")

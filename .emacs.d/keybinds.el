@@ -30,6 +30,65 @@
     "n" 'evil-search-next
     "N" 'evil-search-previous))
 
+;;; Org mode evil bindings
+(defun my/org-heading-has-checkbox-p ()
+  "Check if current heading has [ ] or [X] checkbox."
+  (save-excursion
+    (beginning-of-line)
+    (looking-at "^\\*+\\s-+\\[[ X-]\\]")))
+
+(defun my/org-update-parent-cookie ()
+  "Update parent heading's [/] or [n/m] cookie by counting child heading checkboxes."
+  (save-excursion
+    (when (org-up-heading-safe)
+      (let ((start (point))
+            (end (save-excursion (org-end-of-subtree t) (point)))
+            (level (org-current-level))
+            (checked 0)
+            (total 0))
+        ;; Count direct child headings with checkboxes
+        (save-excursion
+          (while (re-search-forward (format "^\\*\\{%d\\}\\s-+\\[\\([ X-]\\)\\]" (1+ level)) end t)
+            (setq total (1+ total))
+            (when (string= (match-string 1) "X")
+              (setq checked (1+ checked)))))
+        ;; Update the cookie in parent heading
+        (beginning-of-line)
+        (when (re-search-forward "\\[\\([0-9]*/[0-9]*\\|/\\)\\]" (line-end-position) t)
+          (replace-match (format "[%d/%d]" checked total) t t))))))
+
+(defun my/org-toggle-heading-checkbox ()
+  "Toggle [ ] <-> [X] in current heading and update parent cookie."
+  (save-excursion
+    (beginning-of-line)
+    (when (re-search-forward "\\[\\([ X-]\\)\\]" (line-end-position) t)
+      (replace-match (if (string= (match-string 1) " ") "[X]" "[ ]") t t)))
+  (my/org-update-parent-cookie))
+
+(defun my/org-dwim-at-point ()
+  "Do-what-I-mean at point: toggle checkbox, follow link, or cycle TODO."
+  (interactive)
+  (cond
+   ;; Heading with [ ] or [X]
+   ((my/org-heading-has-checkbox-p)
+    (my/org-toggle-heading-checkbox))
+   ;; List checkbox
+   ((org-at-item-checkbox-p)
+    (org-toggle-checkbox))
+   ;; Link
+   ((org-in-regexp org-link-any-re)
+    (org-open-at-point))
+   ;; Regular TODO heading
+   ((org-at-heading-p)
+    (org-todo))
+   (t (org-return))))
+
+(with-eval-after-load 'org
+  (evil-define-key 'normal org-mode-map
+    (kbd "RET") 'my/org-dwim-at-point
+    (kbd "<return>") 'my/org-dwim-at-point
+    "t" 'org-todo))
+
 ;;; LSP keybindings
 (with-eval-after-load 'eglot
   (evil-define-key 'normal eglot-mode-map
