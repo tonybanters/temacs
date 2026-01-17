@@ -155,7 +155,6 @@
 (add-hook 'zig-mode-hook 'eglot-ensure)
 (add-hook 'rust-mode-hook 'eglot-ensure)
 (add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
 (add-hook 'php-mode-hook 'eglot-ensure)
 
 ;; PHP intelephense config (no auto-format)

@@ -1,6 +1,5 @@
 ;;; init.el --- Main entry point -*- lexical-binding: t -*-
 
-;; Suppress byte-compile warnings from packages
 (setq byte-compile-warnings '(not obsolete))
 (setq warning-suppress-log-types '((comp) (bytecomp)))
 (setq native-comp-async-report-warnings-errors 'silent)
@@ -11,7 +10,6 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 
-; Package management
 (defvar rc/package-contents-refreshed nil)
 
 (defun rc/package-refresh-contents-once ()

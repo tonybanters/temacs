@@ -127,7 +127,7 @@
   "ms" 'magit-status
   "ml" 'magit-log
   ;; ssh/servers
-  "st" 'my/connect-tonydev
+  ; "st" 'my/connect-tonydev
   ;; terminal
   "to" 'my/vterm-here
   ;; window
