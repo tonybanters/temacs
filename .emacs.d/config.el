@@ -51,7 +51,7 @@
 (setq auto-save-default nil)
 
 ; Base directory for project-wide searches
-(defvar my/base-dir "/home/tony")
+(defvar my/base-dir "/home/matt")
 
 ; Helper functions
 (defun my/set-base-dir ()
@@ -98,7 +98,7 @@
 (defun my/find-emacs-config ()
   "Find files in emacs config dir."
   (interactive)
-  (let ((default-directory "/home/tony/.emacs.d/"))
+  (let ((default-directory "/home/matt/.emacs.d/"))
     (consult-fd)))
 
 (defun my/switch-project ()
