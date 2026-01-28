@@ -179,9 +179,9 @@
       '(("libera.chat" "#technicalrenaissance")))
 
 (defun my/erc-connect-libera ()
-  "Connect to Libera.Chat via ERC."
+  "Connect to Libera.Chat via ZNC bouncer."
   (interactive)
-  (erc-tls :server "irc.libera.chat"
+  (erc-tls :server "znc.tonybtw.com"
            :port 6697
            :nick "tonybtw"
-           :user "tony"))
+           :user "tonybtw/libera"))
