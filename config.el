@@ -181,7 +181,9 @@
 (defun my/erc-connect-libera ()
   "Connect to Libera.Chat via ZNC bouncer."
   (interactive)
-  (erc-tls :server "znc.tonybtw.com"
-           :port 6697
-           :nick "tonybtw"
-           :user "tonybtw/libera"))
+  (let ((password (read-passwd "ZNC password: ")))
+    (erc-tls :server "192.168.86.113"
+             :port 6697
+             :nick "tonybtw"
+             :user "tony/libera"
+             :password password)))
